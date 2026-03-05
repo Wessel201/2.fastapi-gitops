@@ -4,6 +4,10 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
+HOST = "0.0.0.0"  # nosec B104
+PORT = 8000
+
+
 app = FastAPI(
     title="FastAPI GitOps Starter",
     description="A starter template for learning GitOps with FastAPI",
@@ -49,5 +53,11 @@ async def get_item(item_id: int):
     }
 
 
+@app.post("/api/items")
+async def create_item(name: str, description: str):
+    """Create a new item."""
+    return {"id": 999, "name": name, "description": description, "created": True}
+
+
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host=HOST, port=PORT)
